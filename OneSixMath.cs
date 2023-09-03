@@ -1,21 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Runtime.ConstrainedExecution;
 
 namespace C__Libs
 {
+
+
     public class OneSixMath
     {
+        private static float PI_2 = 1.5707964f;
+        private static float PI = 3.1415926f;
 
         public static int Max(int a, int b)
         {
-            return (a >= b ? 1 : 0) * a + b*(b > a ? 1 : 0);
+            return (a >= b ? 1 : 0) * a + b * (b > a ? 1 : 0);
         }
-
         public static int Min(int a , int b)
         {
             return (a >= b ? 1 : 0) * b + a * (b > a ? 1 : 0);
         }
+        public static double Avg(params IEnumerable<int>[] parameters)
+        {
+            double sum = 0.0;
+            double iter = 0.0;
+            foreach (IEnumerable<int> t in parameters)
+            {
+                foreach (int t2 in t)
+                {
+                    sum = sum + t2;
+                    iter++;
+                }
+            }
 
+            return sum/iter;
+        }
+        public static double Avg(params IEnumerable<double>[] parameters)
+        {
+            double sum = 0.0;
+            double iter = 0;
+            foreach (IEnumerable<double> t in parameters)
+            {
+                foreach (double t2 in t)
+                {
+                    sum = sum + t2;
+                    iter++;
+                }
+            }
+            return sum/iter;
+        }
+        public static float Avg(params IEnumerable<float>[] parameters)
+        {
+            float sum = 0.0f;
+            float iter = 0.0f;
+            foreach (IEnumerable<float> t in parameters)
+            {
+                foreach (float t2 in t)
+                {
+                    sum = sum + t2;
+                    iter++;
+                }
+            }
+            return sum/iter;
+        }
         public static double Avg(params int[] parameters)
         {
 
@@ -29,13 +74,12 @@ namespace C__Libs
             return sum/parameters.Length;
 
         }
-
         public static double Avg(params double[] parameters)
         {
 
             double sum = 0;
 
-            foreach (int i in parameters)
+            foreach (double i in parameters)
             {
                 sum += i;
             }
@@ -43,13 +87,12 @@ namespace C__Libs
             return sum / parameters.Length;
 
         }
-
         public static float Avg(params float[] parameters)
         {
 
             float sum = 0;
 
-            foreach (int i in parameters)
+            foreach (float i in parameters)
             {
                 sum += i;
             }
@@ -57,7 +100,72 @@ namespace C__Libs
             return sum / parameters.Length;
 
         }
+        public static double Sum(params IEnumerable<int>[] parameters)
+        {
+            double sum = 0.0;
+            foreach(IEnumerable<int> t in parameters)
+            {
+                foreach (int t2 in t)
+                {
+                    sum = sum + t2;
+                }
+            }
 
+            return sum;
+        }        
+        public static double Sum(params IEnumerable<double>[] parameters)
+        {
+            double sum = 0.0;
+            foreach(IEnumerable<double> t in parameters)
+            {
+                foreach (double t2 in t)
+                {
+                    sum = sum + t2;
+                }
+            }
+            return sum;
+        }
+        public static float Sum(params IEnumerable<float>[] parameters)
+        {
+            float sum = 0.0f;
+            foreach (IEnumerable<float> t in parameters)
+            {
+                foreach (float t2 in t)
+                {
+                    sum = sum + t2;
+                }
+            }
+            return sum;
+        }
+        public static double Sum(params int[] parameters)
+        {
+            double sum = 0.0;
+            foreach (int t in parameters)
+            {
+                sum += t;
+            }
+            return sum;
+        }
+        public static double Sum(params double[] parameters)
+        {
+            double sum = 0.0;
+            foreach (double t in parameters)
+            {
+                sum += t;
+            }
+            return sum;
+        }
+        public static float Sum(params float[] parameters)
+        {
+            float sum = 0.0f;
+            float iter = 0.0f;
+            foreach (float t in parameters)
+            {
+                sum += t;
+
+            }
+            return sum;
+        }
         public static int BinaryToInt(string S)
         {
             _ = (checkifstringbinary(S) ? 0 : throw new InvalidDataException("Supplied string is not binary!"));
@@ -73,7 +181,6 @@ namespace C__Libs
 
             return a;
         }
-    
         public static string IntToBinary(int input)
         {
             char[] result = new char[32];
@@ -89,7 +196,6 @@ namespace C__Libs
 
             return new string(result);
         }
-
         public static string Int32ToBinary(int input)
         {
             char[] result = new char[32];
@@ -104,13 +210,19 @@ namespace C__Libs
             }
             return new string(result);
         }
-
         public static int Abs(int a)
         {
             return (a < 0 ? -1 : 1) * a;
         }
-
-        public static Dictionary<T, int> FindDuplicates<T>(params T[] parameters)
+        public static float Abs(float a)
+        {
+            return (a < 0 ? -1 : 1) * a;
+        }
+        public static double Abs(double a)
+        {
+            return (a < 0 ? -1 : 1) * a;
+        }
+        public static Dictionary<T, int> MakeFreqDictionary<T>(params T[] parameters)
         {
             Dictionary<T, int> dupes = new();
 
@@ -121,8 +233,7 @@ namespace C__Libs
 
             return dupes;
         }
-
-        public static Dictionary<T, int> FindDuplicates<T>(bool print, params T[] parameters)
+        public static Dictionary<T, int> MakeFreqDictionary<T>(bool print, params T[] parameters)
         {
             Dictionary<T, int> dupes = new();
 
@@ -134,6 +245,155 @@ namespace C__Libs
             _ = print ? printdictionary(dupes) : 0;
 
             return dupes;
+        }
+        public static Dictionary<T, int> MakeDuplicateDictionary<T>(params T[] parameters)
+        {
+            var temp = MakeFreqDictionary<T>(parameters);
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                _ = 1 == kvp.Value ? temp.Remove(kvp.Key) : false;
+            }
+
+            return temp;
+        }
+        public static Dictionary<T, int> MakeDuplicateDictionary<T>(bool print, params T[] parameters)
+        {
+
+            var temp = MakeFreqDictionary<T>(parameters);
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                _ = 1 == kvp.Value ? temp.Remove(kvp.Key) : false;
+            }
+
+            _ = print ? printdictionary(temp) : 0;
+
+            return temp;
+
+        }
+        public static List<T> FindMostFrequent<T>(params T[] parameters)
+        {
+            List<T> list = new List<T>();
+            var temp = MakeDuplicateDictionary<T>(parameters);
+            int max = 0;
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                max = Max(max, kvp.Value);
+            }
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                _ = kvp.Value == max ? listaddhehe<T>(list, kvp.Key): nothing();
+            }
+
+            return list;
+        }
+        public static List<T> FindMostFrequent<T>(bool print,params T[] parameters)
+        {
+            List<T> list = new List<T>();
+            var temp = MakeDuplicateDictionary<T>(parameters);
+            int max = 0;
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                max = Max(max, kvp.Value);
+            }
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                _ = kvp.Value == max ? listaddhehe<T>(list, kvp.Key) : nothing();
+            }
+
+            _ = print ? printlist(list) : 0;
+
+            return list;
+        }
+        public static List<T> FindUniques<T>(params T[] parameters)
+        {
+            var temp = MakeFreqDictionary<T>(parameters);
+
+            List<T> values = new List<T>();
+
+            foreach (KeyValuePair<T, int> kvp in temp)
+            {
+                _ = kvp.Value == 1 ? listaddhehe<T>(values, kvp.Key) : nothing();
+            }
+
+            return values;
+        }
+        public static float ATan2(float y, float x)
+        {
+            float res = .0f;
+
+            //Very easy to predict? Maybe
+            if (x == 0)
+            {
+                res = (y > 0.0f ? 1 : -1) * PI_2;
+                res = (y == 0 ? 0 : 1) * res;
+                return res;
+            }
+
+            res = (Abs(x) > Abs(y)) ? 0.0f : PI_2; 
+            res = (res == PI_2) ? (y > 0 ? PI_2 : -PI_2)+-approxatan(x/y) : 0;
+            res = (res == 0 && x < 0) ? (y >= 0 ? approxatan(y / x)+PI : approxatan(y / x) - PI) : res;
+            res = (res == 0 && x > 0) ? approxatan(y / x) : res;
+
+            return res;
+        }
+
+        //DSPRelated ATan2
+        public static float ApproxAtan2(float y, float x)
+        {
+            if (x != 0.0f)
+            {
+                if (OneSixMath.Abs(x) > OneSixMath.Abs(y))
+                {
+                    float z = y / x;
+                    if (x > 0.0)
+                    {
+                        // atan2(y,x) = atan(y/x) if x > 0
+                        return approxatan(z);
+                    }
+                    else if (y >= 0.0)
+                    {
+                        // atan2(y,x) = atan(y/x) + PI if x < 0, y >= 0
+                        return approxatan(z) + PI;
+                    }
+                    else
+                    {
+                        // atan2(y,x) = atan(y/x) - PI if x < 0, y < 0
+                        return approxatan(z) - PI;
+                    }
+                }
+                else // Use property atan(y/x) = PI/2 - atan(x/y) if |y/x| > 1.
+                {
+                    float z = x / y;
+                    if (y > 0.0)
+                    {
+                        // atan2(y,x) = PI/2 - atan(x/y) if |y/x| > 1, y > 0
+                        return -approxatan(z) + PI_2;
+                    }
+                    else
+                    {
+                        // atan2(y,x) = -PI/2 - atan(x/y) if |y/x| > 1, y < 0
+                        return -approxatan(z) - PI_2;
+                    }
+                }
+            }
+            else
+            {
+                if (y > 0.0f) // x = 0, y > 0
+                {
+                    return PI_2;
+                }
+                else if (y < 0.0f) // x = 0, y < 0
+                {
+                    return -PI_2;
+                }
+            }
+            return 0.0f; // x,y = 0. Could return NaN instead.
         }
 
         private static bool checkifstringbinary(string s)
@@ -150,7 +410,6 @@ namespace C__Libs
 
             return check == 0;
         }
-
         private static int printdictionary<T,G>(Dictionary<T,G> A)
         {
             foreach (KeyValuePair<T, G> kvp in A)
@@ -160,8 +419,30 @@ namespace C__Libs
 
             return 0;
         }
-    
+        private static int printlist<T>(List<T> A)
+        {
+            foreach (T kvp in A)
+            {
+                Console.WriteLine(kvp);
+            }
 
-
+            return 0;
+        }
+        private static int listaddhehe<T>(List<T> here, T a)
+        {
+            here.Add(a);
+            return 1;
+        }
+        private static float approxatan(float z)
+        {
+            const float n1 = 0.97239411f;
+            const float n2 = -0.19194795f;
+            return (n1 + n2 * z * z) * z;
+        }
+        private static int nothing()
+        {
+            //How miserable of you to end up using this.
+            return 1;
+        }
     }
 }
