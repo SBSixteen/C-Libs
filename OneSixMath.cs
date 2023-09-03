@@ -3,8 +3,6 @@ using System.Runtime.ConstrainedExecution;
 
 namespace C__Libs
 {
-
-
     public class OneSixMath
     {
         private static float PI_2 = 1.5707964f;
@@ -342,7 +340,56 @@ namespace C__Libs
 
             return res;
         }
+        private static bool checkifstringbinary(string s)
+        {
+            int check = 0;
+            int index = s.Length - 1;
 
+
+            while (check == 0 && index > -1)
+            {
+                check = (s[index] == '1' || s[index] == '0') ? 0 : 1;
+                index--;
+            }
+
+            return check == 0;
+        }
+        private static int printdictionary<T,G>(Dictionary<T,G> A)
+        {
+            foreach (KeyValuePair<T, G> kvp in A)
+            {
+                Console.WriteLine(kvp.Key + ": " + kvp.Value);
+            }
+
+            return 0;
+        }
+        private static int printlist<T>(List<T> A)
+        {
+            foreach (T kvp in A)
+            {
+                Console.WriteLine(kvp);
+            }
+
+            return 0;
+        }
+        private static int listaddhehe<T>(List<T> here, T a)
+        {
+            here.Add(a);
+            return 1;
+        }
+        private static float approxatan(float z)
+        {
+            const float n1 = 0.97239411f;
+            const float n2 = -0.19194795f;
+            return (n1 + n2 * z * z) * z;
+        }
+        private static int nothing()
+        {
+            //How miserable of you to end up using this.
+            return 1;
+        }
+
+        //NotMine
         //DSPRelated ATan2
         public static float ApproxAtan2(float y, float x)
         {
@@ -394,55 +441,6 @@ namespace C__Libs
                 }
             }
             return 0.0f; // x,y = 0. Could return NaN instead.
-        }
-
-        private static bool checkifstringbinary(string s)
-        {
-            int check = 0;
-            int index = s.Length - 1;
-
-
-            while (check == 0 && index > -1)
-            {
-                check = (s[index] == '1' || s[index] == '0') ? 0 : 1;
-                index--;
-            }
-
-            return check == 0;
-        }
-        private static int printdictionary<T,G>(Dictionary<T,G> A)
-        {
-            foreach (KeyValuePair<T, G> kvp in A)
-            {
-                Console.WriteLine(kvp.Key + ": " + kvp.Value);
-            }
-
-            return 0;
-        }
-        private static int printlist<T>(List<T> A)
-        {
-            foreach (T kvp in A)
-            {
-                Console.WriteLine(kvp);
-            }
-
-            return 0;
-        }
-        private static int listaddhehe<T>(List<T> here, T a)
-        {
-            here.Add(a);
-            return 1;
-        }
-        private static float approxatan(float z)
-        {
-            const float n1 = 0.97239411f;
-            const float n2 = -0.19194795f;
-            return (n1 + n2 * z * z) * z;
-        }
-        private static int nothing()
-        {
-            //How miserable of you to end up using this.
-            return 1;
         }
     }
 }
