@@ -340,6 +340,44 @@ namespace C__Libs
 
             return res;
         }
+        public static IEnumerable<int> GenerateIntCollection(int start, int end)
+        {
+            List<int> result = new List<int>();
+
+            while (start <= end)
+            {
+                result.Add(start);
+                start++;
+            }
+
+            return result;
+        }
+        public static IEnumerable<float> GenerateFloatCollection(float start, float end, float increments)
+        {
+            List<float> result = new List<float>();
+
+            while (start <= end)
+            {
+                result.Add(start);
+                start+=increments;
+            }
+
+            return result;
+        }
+        public static IEnumerable<double> GenerateDoubleCollection(double start, double end, double increments)
+        {
+            List<double> result = new List<double>();
+
+            while (start <= end)
+            {
+                result.Add(start);
+                start+=increments;
+            }
+
+            return result;
+        }
+        
+        //<privates>
         private static bool checkifstringbinary(string s)
         {
             int check = 0;
@@ -388,11 +426,11 @@ namespace C__Libs
             //How miserable of you to end up using this.
             return 1;
         }
-
+        
         //NotMine
-        //DSPRelated ATan2
         public static float ApproxAtan2(float y, float x)
         {
+            //<DSPRelated ATan2>
             if (x != 0.0f)
             {
                 if (OneSixMath.Abs(x) > OneSixMath.Abs(y))

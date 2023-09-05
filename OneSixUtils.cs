@@ -65,7 +65,6 @@
         }
         public static void PrintCollections<T>(char delimeter, params IEnumerable<T>[] parameters)
         {
-         
             string res = string.Empty;
             int i = 0;
             
@@ -85,7 +84,6 @@
         }
         public static void PrintCollections<T>(string delimeter, params IEnumerable<T>[] parameters)
         {
-
             string res = string.Empty;
             int i = 0;
 
@@ -103,5 +101,6 @@
 
             Console.WriteLine(res);
         }
+        
     }
 }
